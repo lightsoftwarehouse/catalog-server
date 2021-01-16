@@ -1,0 +1,19 @@
+{
+	"name": "default",
+	"type": "postgres",
+	"host": "suleiman.db.elephantsql.com",
+	"port": 5432,
+	"username": "nzfzvjrx",
+	"password": "uNZkJTTCrOl7GD6c7rObzyIKPT5VUCrO",
+	"database": "nzfzvjrx",
+	"synchronize": true,
+	"logging": false,
+	"entities": [ "./src/models/*.ts" ],
+	"migrations": [ "./src/migrations/*.ts" ],
+	"subscribers": [ "./src/subscriber/*.ts" ],
+	"cli": {
+		"entitiesDir": "./src/models",
+		"migrationsDir": "./src/migrations",
+		"subscribersDir": "./src/subscriber"
+	}
+}
