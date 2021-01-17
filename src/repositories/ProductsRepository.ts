@@ -1,15 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Category from '../models/Category';
 import Product from '../models/Product';
 
 @EntityRepository(Product)
 export class ProductsRepository extends Repository<Product> {
-	async findAllWithCategoryName(): Promise<any[]> {
-		return await this.find({ relations: ['category']});
-		return await 
-			this.createQueryBuilder('p')
-					.innerJoin('p.categoryId', 'c', 'p.categoryId = c.id')
-				.getMany();
+	async findAllWithCategoryName(): Promise<Product[]> {
+		return await this.find({ relations: ['category'] });
 	}
 
 	async findAllActives(): Promise<Product[]> {
@@ -17,7 +12,7 @@ export class ProductsRepository extends Repository<Product> {
 	}
 
 	async findById(productId: string): Promise<Product | undefined> {
-		return await this.findOne({ id: productId });
+		return await this.findOne({ id: productId }, { relations: ['category']});
 	}
 
 	async findByName(productName: string): Promise<Product | undefined> {

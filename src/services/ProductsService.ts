@@ -59,6 +59,19 @@ export class ProductsService {
 		return [];
 	}
 
+	async findById(productId: string): Promise<StatusMessage<ProductsListDTO | boolean>> {
+		const product = await this.productsRepository.findById(productId);
+
+		if (!product) {
+			return new StatusMessage(500, 'Produto não encontrado', false);
+		}
+
+		const { id, name, client, status, contact, createdAt, price, category: { name: categoryName } } = product;
+		const productDTO = new ProductsListDTO(id, name, categoryName, client, contact, price, status, createdAt);
+
+		return new StatusMessage(200, '', productDTO);
+	}
+
 	async delete(productId: string): Promise<StatusMessage<Boolean>> {
 		try {
 			let product = await this.productsRepository.findById(productId);

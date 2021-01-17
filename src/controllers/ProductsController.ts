@@ -31,6 +31,11 @@ export class ProductsController {
 		return await this.productsService.listProducts(pageControl);
 	}
 
+	@Get('/:productId')
+	async findById(@PathParams('productId') productId: string): Promise<StatusMessage<ProductsListDTO | boolean>> {
+		return await this.productsService.findById(productId);
+	}
+
 	@Delete('/:productId')
 	async delete(@PathParams('productId') productId: string): Promise<StatusMessage<Boolean>> {
 		return await this.productsService.delete(productId);
