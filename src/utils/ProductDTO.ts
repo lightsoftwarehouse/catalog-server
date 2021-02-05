@@ -9,5 +9,5 @@ export default interface ProductDTO {
 	price: number;
 	active?: boolean;
 	status?: 'available' | 'negotiation' | 'finished';
-	images: Image[];
+	images?: Image[];
 }

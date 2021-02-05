@@ -1,8 +1,9 @@
 import { Default, Required } from '@tsed/schema';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import Category from './Category';
 import Image from './Image';
+import Sale from './Sale';
 
 @Entity('product')
 export default class Product {
@@ -31,6 +32,9 @@ export default class Product {
 	@ManyToOne(() => Category, category => category.product)
 	@JoinColumn({ name: 'categoryId'})
 	category: Category;
+
+	@OneToOne(() => Sale, sale => sale.product)
+	sale: Sale;
 	
 	@Required()
 	@Column({ type: 'numeric' })

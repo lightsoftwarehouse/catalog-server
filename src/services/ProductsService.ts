@@ -2,14 +2,14 @@ import { PlatformMulterFile } from "@tsed/common";
 import { Inject, Injectable, Service } from "@tsed/di";
 import Product from '../models/Product';
 import { ProductsRepository } from '../repositories/ProductsRepository';
-import PageControl from "../utils/PageControl";
+import PageControl from "../helpers/PageControl";
 import ProductDTO from "../utils/ProductDTO";
 import ProductsListDTO from "../utils/ProductsListDTO";
 import StatusMessage from "../utils/StatusMessage";
 
 @Injectable()
 @Service()
-export class ProductsService {
+export default class ProductsService {
 	@Inject()
 	productsRepository: ProductsRepository;
 
@@ -17,11 +17,22 @@ export class ProductsService {
 		const products = await this.productsRepository.findAllWithCategoryName();
 		const productsList: ProductsListDTO[] = [];
 
-		products.map(({ id, name, client, status, contact, createdAt, price, category: { name: categoryName } }) => {
-			const productList: ProductsListDTO = new ProductsListDTO(id, name, categoryName, client, contact, price, status, createdAt);
+		products.map(({ id, name, client, status, contact, createdAt, price, category: { id: categoryId, name: categoryName }, images }) => {
+			const productList: ProductsListDTO = new ProductsListDTO(id, name, categoryId, categoryName, client, contact, price, status, images || [], createdAt);
 
 			productsList.push(productList);
 		})
+
+		return productsList;
+	}
+
+	async findAvailableProducts(): Promise<ProductDTO[]> {
+		const products = await this.productsRepository.findAvailables();
+		const productsList: ProductDTO[] = [];
+
+		products.map(({ id, name, client, contact, price, categoryId }) => {
+			productsList.push({ id, name, client, price, contact, categoryId });
+		});
 
 		return productsList;
 	}
@@ -66,8 +77,8 @@ export class ProductsService {
 			return new StatusMessage(500, 'Produto não encontrado', false);
 		}
 
-		const { id, name, client, status, contact, createdAt, price, category: { name: categoryName } } = product;
-		const productDTO = new ProductsListDTO(id, name, categoryName, client, contact, price, status, createdAt);
+		const { id, name, client, status, contact, createdAt, price, category: { id: categoryId, name: categoryName }, images } = product;
+		const productDTO = new ProductsListDTO(id, name, categoryId, categoryName, client, contact, price, status, images || [], createdAt);
 
 		return new StatusMessage(200, '', productDTO);
 	}

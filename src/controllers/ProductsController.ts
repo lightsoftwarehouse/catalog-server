@@ -1,7 +1,7 @@
 import { BodyParams, Controller, Delete, Get, Inject, MultipartFile, PathParams, PlatformMulterFile, Post } from '@tsed/common';
 import Product from '../models/Product';
-import { ProductsService } from '../services/ProductsService';
-import PageControl from '../utils/PageControl';
+import ProductsService from '../services/ProductsService';
+import PageControl from '../helpers/PageControl';
 import ProductDTO from '../utils/ProductDTO';
 import ProductsListDTO from '../utils/ProductsListDTO';
 import StatusMessage from '../utils/StatusMessage';
@@ -14,6 +14,11 @@ export class ProductsController {
 	@Get('/')
 	async get(): Promise<ProductsListDTO[]> {
 		return await this.productsService.findAll();
+	}
+
+	@Get('/availables')
+	async getAvailables(): Promise<ProductDTO[]> {
+		return await this.productsService.findAvailableProducts();
 	}
 
 	@Post('/')
