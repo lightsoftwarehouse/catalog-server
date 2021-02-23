@@ -1,4 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
+import ClientList from '../helpers/ClientList';
 import Product from '../models/Product';
 
 @EntityRepository(Product)
@@ -21,5 +22,9 @@ export class ProductsRepository extends Repository<Product> {
 
 	async findByName(productName: string): Promise<Product | undefined> {
 		return await this.findOne({ name: productName });
+	}
+
+	async findClients(): Promise<ClientList[]> {
+		return await this.find({ select: ['client', 'contact', 'createdAt'] });
 	}
 }

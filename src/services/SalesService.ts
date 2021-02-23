@@ -19,10 +19,10 @@ export class SalesService {
 		const sales = await this.salesRepository.findAll();
 		const salesList: SalesList[] = [];
 
-		sales.map(({ id, productId, product, contact, price, createdAt }) => {
+		sales.map(({ id, productId, product, client, contact, price, createdAt }) => {
 			const { category: { name: categoryName }, name } = product;
 
-			salesList.push({ productId, saleId: id, name, category: categoryName, contact, price, createdAt  })
+			salesList.push({ productId, saleId: id, name, category: categoryName, client, contact, price, createdAt  })
 		});
 
 		return salesList;

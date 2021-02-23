@@ -3,6 +3,7 @@ export default interface SalesList {
 	saleId: string;
 	name: string;
 	category: string;
+	client: string;
 	contact: string;
 	price: number;
 	createdAt: Date;
