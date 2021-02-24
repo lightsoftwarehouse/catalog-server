@@ -1,4 +1,4 @@
-{
+module.exports = {
 	"name": "default",
 	"type": "postgres",
 	"host": "suleiman.db.elephantsql.com",
@@ -12,4 +12,4 @@
 		"entitiesDir": "./src/models",
 		"migrationsDir": "./src/migrations"
 	}
-}
+};

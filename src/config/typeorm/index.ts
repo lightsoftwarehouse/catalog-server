@@ -1,5 +1,5 @@
 // @tsed/cli do not edit
-import * as defaultConfig from "./default.config.json";
+import defaultConfig from '../typeorm/default';
 
 export default [
 	defaultConfig as any
